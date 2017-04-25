@@ -50,7 +50,11 @@ module ActsAsTenant
 
       self.class_eval do
 
-        before_filter :find_tenant_by_subdomain_or_domain
+        if respond_to?(:before_action)
+          before_action :find_tenant_by_subdomain_or_domain
+        else
+          before_filter :find_tenant_by_subdomain_or_domain
+        end
         helper_method :current_tenant if respond_to?(:helper_method)
 
 
