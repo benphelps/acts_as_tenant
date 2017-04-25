@@ -8,7 +8,11 @@ end
 class ApplicationController2 < ActionController::Base
   include Rails.application.routes.url_helpers
   set_current_tenant_through_filter
-  before_action :your_method_that_finds_the_current_tenant
+  if respond_to?(:before_action)
+    before_action :your_method_that_finds_the_current_tenant
+  else
+    before_filter :your_method_that_finds_the_current_tenant
+  end
 
   def your_method_that_finds_the_current_tenant
     current_account = Account.new
